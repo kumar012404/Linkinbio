@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/[a-zA-Z0-9_-]+",
+        "destination": "/profile.html"
+      }
+    ]
+  }
+}

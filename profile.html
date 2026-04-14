@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | LinkIn Luxury</title>
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --card-bg: #111111;
+            --gold-primary: #FFD700;
+            --gold-secondary: #DAA520;
+            --text-color: #ffffff;
+            --text-muted: #888888;
+            --border-color: #222;
+            --btn-glow: 0 0 15px rgba(255, 215, 0, 0.15);
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .profile-container {
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        /* Profile Image */
+        .profile-img-wrapper {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid var(--gold-primary);
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.2);
+            padding: 5px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .profile-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Brand & Username */
+        .brand-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--gold-primary);
+            letter-spacing: 3px;
+            margin-bottom: 2px;
+            text-transform: uppercase;
+        }
+
+        .brand-subtitle {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .username {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: var(--text-color);
+            margin-bottom: 24px;
+        }
+
+        /* Buttons Section */
+        .links-wrapper {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .link-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 16px 20px;
+            border-radius: 14px;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        .link-item:hover {
+            transform: scale(1.03);
+            border-color: var(--gold-primary);
+            box-shadow: var(--btn-glow);
+            background-color: #1a1a1a;
+        }
+
+        .link-content {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .link-content i {
+            font-size: 1.2rem;
+            color: var(--gold-primary);
+        }
+
+        .link-text {
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .chevron {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            opacity: 0.5;
+        }
+
+        /* Share Button */
+        .share-btn-wrapper {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .share-icon-btn {
+            background: transparent;
+            color: var(--gold-primary);
+            border: none;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.5rem;
+        }
+
+        .share-icon-btn:hover {
+            transform: scale(1.2);
+            color: var(--text-color);
+        }
+
+        .share-tooltip {
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background: var(--gold-primary);
+            color: #000;
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+            transform: translateY(-10px);
+        }
+
+        .share-tooltip.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: auto;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        .footer .gold {
+            color: var(--gold-primary);
+            font-weight: 600;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hidden { display: none !important; }
+
+        /* Loader */
+        #loader {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 215, 0, 0.1);
+            border-top: 4px solid var(--gold-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .btn-retry {
+            margin-top: 15px;
+            background: var(--gold-gradient);
+            padding: 10px 20px;
+            border-radius: 10px;
+            color: #000;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Loader -->
+    <div id="loader">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Error State -->
+    <div id="profile-not-found" class="profile-container hidden">
+        <h2 style="color: #ff4d4d; margin-bottom: 10px;">Profile Not Found</h2>
+        <p style="color: var(--text-muted);">The profile you're looking for doesn't exist.</p>
+        <a href="index.html" class="btn-retry">Create Your Own</a>
+    </div>
+
+    <!-- Share Button (Fixed outside to prevent jump) -->
+    <div id="share-btn-wrapper" class="share-btn-wrapper hidden">
+        <button id="share-btn" class="share-icon-btn" title="Share Profile">
+            <i class="fas fa-share-nodes"></i>
+        </button>
+        <div id="share-tooltip" class="share-tooltip">Link Copied!</div>
+    </div>
+
+    <!-- Success State -->
+    <div id="profile-viewer" class="profile-container hidden">
+        <!-- Profile Image -->
+        <div class="profile-img-wrapper">
+            <img id="display-img" src="" alt="Profile">
+        </div>
+
+        <!-- Brand Name -->
+        <h1 class="brand-name">STREETFIT</h1>
+        <p class="brand-subtitle">Clothing</p>
+
+        <!-- Username -->
+
+        <!-- Links -->
+        <div class="links-wrapper">
+            <!-- Instagram -->
+            <a href="#" id="card-insta" class="link-item hidden" target="_blank">
+                <div class="link-content">
+                    <i class="fab fa-instagram"></i>
+                    <span class="link-text">Follow on Instagram</span>
+                </div>
+                <i class="fas fa-chevron-right chevron"></i>
+            </a>
+
+            <!-- YouTube -->
+            <a href="#" id="card-youtube" class="link-item hidden" target="_blank">
+                <div class="link-content">
+                    <i class="fab fa-youtube"></i>
+                    <span class="link-text">Subscribe on YouTube</span>
+                </div>
+                <i class="fas fa-chevron-right chevron"></i>
+            </a>
+
+            <!-- WhatsApp -->
+            <a href="#" id="card-whatsapp" class="link-item hidden" target="_blank">
+                <div class="link-content">
+                    <i class="fab fa-whatsapp"></i>
+                    <span class="link-text">Join WhatsApp Group</span>
+                </div>
+                <i class="fas fa-chevron-right chevron"></i>
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Created with <span class="gold">StreetFit</span></p>
+        </footer>
+    </div>
+
+    <!-- Logic -->
+    <script type="module" src="js/profile.js"></script>
+</body>
+</html>

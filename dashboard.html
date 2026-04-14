@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | LinkIn Luxury</title>
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="main-content" class="dashboard-container hidden">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-text">
+                <h1>DASHBOARD</h1>
+                <p>Luxury Link Management</p>
+            </div>
+            <button id="logout-btn" class="btn btn-secondary" style="width: auto; height: 40px; padding: 0 15px; border-radius: 50px; font-size: 0.8rem;">
+                <i class="fas fa-power-off"></i>
+            </button>
+        </div>
+
+        <!-- Dashboard Card -->
+        <div class="card">
+            <h2 style="font-size: 1.1rem; color: var(--gold-primary); margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px;">Profile Settings</h2>
+            
+            <div id="status-msg" style="margin-bottom: 1rem; text-align: center; color: var(--gold-primary); font-size: 0.9rem;"></div>
+
+            <form id="dashboard-form">
+                <!-- Username -->
+                <div class="form-group">
+                    <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                        <div class="input-wrapper" style="flex: 1;">
+                            <span class="input-icon">👤</span>
+                            <input type="text" id="username" required placeholder="Username" autocomplete="off">
+                        </div>
+                        <button type="button" id="edit-username-btn" class="btn btn-secondary hidden" style="width: auto; padding: 0 15px; height: 52px;">
+                            <i class="fas fa-unlock"></i>
+                        </button>
+                    </div>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 5px; opacity: 0.8;">
+                        <i class="fas fa-link" style="color: var(--gold-primary);"></i> profile.html?u=<b><span id="url-preview" style="color: var(--gold-primary);">username</span></b>
+                    </p>
+                </div>
+
+                <!-- Profile Image URL -->
+                <div class="form-group">
+                    <div class="input-wrapper">
+                        <span class="input-icon">🖼️</span>
+                        <input type="url" id="profile-img" placeholder="Profile Image URL" autocomplete="off">
+                    </div>
+                </div>
+
+                <!-- Instagram -->
+                <div class="form-group">
+                    <div class="input-wrapper">
+                        <span class="input-icon">📸</span>
+                        <input type="url" id="instagram-link" placeholder="Instagram Link" autocomplete="off">
+                    </div>
+                </div>
+
+                <!-- YouTube -->
+                <div class="form-group">
+                    <div class="input-wrapper">
+                        <span class="input-icon">📺</span>
+                        <input type="url" id="youtube-link" placeholder="YouTube Link" autocomplete="off">
+                    </div>
+                </div>
+
+                <!-- WhatsApp -->
+                <div class="form-group">
+                    <div class="input-wrapper">
+                        <span class="input-icon">💬</span>
+                        <input type="url" id="whatsapp-link" placeholder="WhatsApp Group Link" autocomplete="off">
+                    </div>
+                </div>
+
+                <!-- Buttons Area -->
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Save Profile Details
+                    </button>
+                    <div id="view-profile-div" style="display: none;">
+                        <a href="#" id="view-profile-btn" class="btn btn-secondary" target="_blank">
+                            <i class="fas fa-external-link-alt"></i> View My Public Profile
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Loader -->
+    <div id="loader">
+        <div class="spinner"></div>
+    </div>
+
+    <script type="module" src="js/dashboard.js"></script>
+</body>
+</html>
