@@ -35,8 +35,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 40px 20px;
+            padding: 110px 10px;
         }
 
         .profile-container {
@@ -46,6 +45,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            flex: 1;
             animation: slideUp 0.8s ease-out;
         }
 
@@ -55,7 +55,6 @@
             height: 120px;
             border-radius: 50%;
             border: 3px solid var(--gold-primary);
-            box-shadow: 0 0 25px rgba(255, 215, 0, 0.2);
             padding: 5px;
             margin-bottom: 16px;
             display: flex;
@@ -201,9 +200,33 @@
         /* Footer */
         .footer {
             margin-top: auto;
-            font-size: 0.8rem;
+            padding-top: 110px;
+            padding-bottom: 20px;
+            width: 100%;
+            text-align: center;
+            font-size: 0.75rem;
             color: var(--text-muted);
             letter-spacing: 1px;
+        }
+
+        .footer-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .footer-divider .line {
+            height: 1px;
+            flex: 1;
+            background: #222;
+        }
+
+        .footer-logo {
+            width: 26px;
+            height: 26px;
+            object-fit: contain;
         }
 
         .footer .gold {
@@ -318,9 +341,14 @@
             </a>
         </div>
 
-        <!-- Footer -->
+        <!-- Premium Footer -->
         <footer class="footer">
-            <p>Created with <span class="gold">StreetFit</span></p>
+            <div class="footer-divider">
+                <div class="line"></div>
+                <img src="wolf.png" alt="STREETFIT" class="footer-logo">
+                <div class="line"></div>
+            </div>
+            <p>&copy; 2026 <span class="gold">StreetFit Clothing.</span> All Rights Reserved.</p>
         </footer>
     </div>
 
