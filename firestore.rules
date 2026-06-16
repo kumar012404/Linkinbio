@@ -1,0 +1,17 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{username} {
+      // Allow anyone to read a profile
+      allow read: if true;
+      
+      // Only allow the owner to create or update their profile
+      allow write: if request.auth != null && (
+        !exists(/databases/$(database)/documents/users/$(username)) || 
+        get(/databases/$(database)/documents/users/$(username)).data.owner == request.auth.uid ||
+        request.resource.data.owner == request.auth.uid
+      );
+    }
+  }
+}

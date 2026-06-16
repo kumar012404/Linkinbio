@@ -70,7 +70,7 @@ function loadProfile() {
     }
 
     // Real-time listener
-    const docRef = doc(db, "users", username.toLowerCase());
+    const docRef = doc(db, "projects", "linkinbio", "users", username.toLowerCase());
     onSnapshot(docRef, (docSnap) => {
         loader.classList.add('hidden');
         if (docSnap.exists()) {

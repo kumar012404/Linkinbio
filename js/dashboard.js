@@ -20,6 +20,11 @@ const statusMsg = document.getElementById('status-msg');
 const viewProfileDiv = document.getElementById('view-profile-div');
 const viewProfileBtn = document.getElementById('view-profile-btn');
 const editUsernameBtn = document.getElementById('edit-username-btn');
+const generateQrBtn = document.getElementById('generate-qr-btn');
+const qrModal = document.getElementById('qr-modal');
+const qrContainer = document.getElementById('qrcode');
+const qrClose = document.getElementById('close-qr');
+const qrUrlText = document.getElementById('qr-url');
 
 let currentUser = null;
 let currentProfileData = null;
@@ -30,6 +35,13 @@ onAuthStateChanged(auth, async (user) => {
         window.location.href = 'index.html';
     } else {
         currentUser = user;
+        
+        const headerUserEmail = document.getElementById('header-user-email');
+        if (headerUserEmail && user.email) {
+            const displayEmail = user.email.split('@')[0];
+            headerUserEmail.innerHTML = `<i class="fas fa-user-circle"></i> ${displayEmail}`;
+        }
+
         await loadUserData();
         // Show content after everything is loaded
         mainContent.classList.remove('hidden');
@@ -40,7 +52,7 @@ onAuthStateChanged(auth, async (user) => {
 // Load existing data
 async function loadUserData() {
     try {
-        const q = query(collection(db, "users"), where("owner", "==", currentUser.uid));
+        const q = query(collection(db, "projects", "linkinbio", "users"), where("owner", "==", currentUser.uid));
         const querySnapshot = await getDocs(q);
         
         if (!querySnapshot.empty) {
@@ -92,10 +104,10 @@ dashboardForm.addEventListener('submit', async (e) => {
     try {
         // If it's a new username, check if it exists
         if (!currentProfileData) {
-            const docRef = doc(db, "users", username);
+            const docRef = doc(db, "projects", "linkinbio", "users", username);
             const docSnap = await getDoc(docRef);
             
-            if (docSnap.exists()) {
+            if (docSnap.exists() && docSnap.data().owner !== currentUser.uid) {
                 statusMsg.innerText = "Error: Username already taken!";
                 loader.classList.add('hidden');
                 return;
@@ -103,7 +115,7 @@ dashboardForm.addEventListener('submit', async (e) => {
         }
 
         // Save to Firestore
-        await setDoc(doc(db, "users", username), profileData);
+        await setDoc(doc(db, "projects", "linkinbio", "users", username), profileData);
         statusMsg.innerText = "✅ Profile updated successfully!";
         usernameInput.disabled = true;
         editUsernameBtn.classList.remove('hidden');
@@ -116,9 +128,48 @@ dashboardForm.addEventListener('submit', async (e) => {
 });
 
 function showViewButton(username) {
-    viewProfileDiv.style.display = 'block';
+    viewProfileDiv.style.display = 'flex';
     viewProfileBtn.href = `profile.html?u=${username}`;
 }
+
+// Generate QR Code
+generateQrBtn.addEventListener('click', () => {
+    const username = usernameInput.value.trim().toLowerCase();
+    if (!username) return;
+
+    // Clear previous QR
+    qrContainer.innerHTML = '';
+    
+    // Construct the absolute URL (Works for local and hosted)
+    const baseUrl = window.location.origin + window.location.pathname.replace('dashboard.html', '');
+    const publicUrl = `${baseUrl}${username}`;
+    
+    qrUrlText.innerText = publicUrl;
+
+    // Generate QR
+    new QRCode(qrContainer, {
+        text: publicUrl,
+        width: 180,
+        height: 180,
+        colorDark : "#000000",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
+    });
+
+    qrModal.style.display = 'flex';
+});
+
+// Close QR Modal
+qrClose.addEventListener('click', () => {
+    qrModal.style.display = 'none';
+});
+
+// Close on click outside
+window.addEventListener('click', (e) => {
+    if (e.target === qrModal) {
+        qrModal.style.display = 'none';
+    }
+});
 
 // Allow editing username
 editUsernameBtn.addEventListener('click', () => {

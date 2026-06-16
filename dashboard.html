@@ -8,6 +8,75 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <!-- QR Code Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        /* QR Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: #111;
+            padding: 30px;
+            border-radius: 20px;
+            border: 2px solid var(--gold-primary);
+            text-align: center;
+            max-width: 90%;
+            width: 320px;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+            animation: modalScale 0.3s ease-out;
+        }
+
+        @keyframes modalScale {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        #qrcode {
+            background-color: white;
+            padding: 15px;
+            border-radius: 12px;
+            display: inline-block;
+            margin: 20px 0;
+        }
+
+        #qrcode img {
+            display: block;
+            margin: 0 auto;
+        }
+
+        .modal-title {
+            color: var(--gold-primary);
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .modal-subtitle {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-bottom: 15px;
+        }
+
+        .close-modal {
+            margin-top: 15px;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 0.9rem;
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
 
@@ -18,9 +87,17 @@
                 <h1>DASHBOARD</h1>
                 <p>Luxury Link Management</p>
             </div>
-            <button id="logout-btn" class="btn btn-secondary" style="width: auto; height: 40px; padding: 0 15px; border-radius: 50px; font-size: 0.8rem;">
-                <i class="fas fa-power-off"></i>
-            </button>
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <a href="../index.html" class="btn btn-secondary" title="Back to Home" style="width: auto; height: 40px; padding: 0 15px; border-radius: 50px; font-size: 0.8rem; text-decoration: none; display: flex; align-items: center;">
+                    <i class="fas fa-home"></i>
+                </a>
+                <div id="header-user-email" style="color: var(--gold-primary); font-size: 0.85rem; font-weight: 500; background: rgba(255,215,0,0.1); padding: 5px 12px; border-radius: 20px; border: 1px solid rgba(255,215,0,0.3);">
+                    <i class="fas fa-user-circle"></i> User
+                </div>
+                <button id="logout-btn" class="btn btn-secondary" style="width: auto; height: 40px; padding: 0 15px; border-radius: 50px; font-size: 0.8rem;">
+                    <i class="fas fa-power-off"></i>
+                </button>
+            </div>
         </div>
 
         <!-- Dashboard Card -->
@@ -83,13 +160,27 @@
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-save"></i> Save Profile Details
                     </button>
-                    <div id="view-profile-div" style="display: none;">
+                    <div id="view-profile-div" style="display: none; flex-direction: column; gap: 10px; width: 100%;">
                         <a href="#" id="view-profile-btn" class="btn btn-secondary" target="_blank">
                             <i class="fas fa-external-link-alt"></i> View My Public Profile
                         </a>
+                        <button type="button" id="generate-qr-btn" class="btn btn-secondary" style="border-color: var(--gold-secondary); color: var(--gold-primary);">
+                            <i class="fas fa-qrcode"></i> Get My QR Code
+                        </button>
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- QR Modal -->
+    <div id="qr-modal" class="modal">
+        <div class="modal-content">
+            <h3 class="modal-title">Your Profile QR</h3>
+            <p class="modal-subtitle">Scan to view your luxury link</p>
+            <div id="qrcode"></div>
+            <p id="qr-url" style="font-size: 0.7rem; color: var(--gold-primary); word-break: break-all; margin-top: 10px;"></p>
+            <div class="close-modal" id="close-qr">Close</div>
         </div>
     </div>
 
